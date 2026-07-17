@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette */
+  --color-brand-black: #0B0B0C;
+  --color-brand-white: #FFFFFF;
+  --color-brand-warm: #FAFAF7;
+  --color-brand-orange: #FF6A00;
+  --color-brand-deep: #C2410C;
+  --color-brand-gray: #6B6B70;
+
+  /* Fonts */
+  --font-display: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+
+  /* Custom spacing */
+  --spacing-section: 5rem;
+  --spacing-section-sm: 3rem;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #FAFAF7;
+  color: #0B0B0C;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* ─── SIGNATURE ELEMENT: The Orange Rule ─────────────────────────────────────
+   A 40px × 3px orange bar that sits ABOVE section headings.
+   Applied via .orange-rule class on the heading element.
+   Signals intentional design rather than decoration.
+──────────────────────────────────────────────────────────────────────────────── */
+.orange-rule::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #FF6A00;
+  margin-bottom: 14px;
+}
+
+/* Price currency label */
+.price-tsh {
+  color: #FF6A00;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+}
+
+/* Deal badge — always sharp corners, always high-contrast */
+.deal-badge {
+  display: inline-block;
+  background: #0B0B0C;
+  color: #FF6A00;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 0;
+}
+
+/* Orange bordered card accent on hover */
+.product-card {
+  border-bottom: 3px solid transparent;
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+.product-card:hover {
+  border-bottom-color: #FF6A00;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Focus ring — brand-orange */
+:focus-visible {
+  outline: 2px solid #FF6A00;
+  outline-offset: 3px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #FAFAF7; }
+::-webkit-scrollbar-thumb { background: #C2410C; border-radius: 3px; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* Remove default list styles when used for nav/UI */
+nav ul, nav ol { list-style: none; margin: 0; padding: 0; }
+
+/* Image default */
+img { max-width: 100%; display: block; }
