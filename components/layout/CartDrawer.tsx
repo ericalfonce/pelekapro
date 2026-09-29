@@ -4,6 +4,7 @@ import { useCartStore } from "@/lib/store/cart";
 import { X, ShoppingBag, Plus, Minus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { PriceTag } from "@/components/ui/PriceTag";
+import { ProductArtwork } from "@/components/ui/ProductArtwork";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, subtotal } = useCartStore();
@@ -60,7 +61,13 @@ export function CartDrawer() {
               {items.map((item) => (
                 <li key={`${item.product.id}-${item.selectedVariant ?? ""}`} className="flex gap-3">
                   <div className="w-16 h-16 bg-brand-warm flex-shrink-0 flex items-center justify-center text-2xl rounded-sm">
-                    {item.product.image || "📦"}
+                    <ProductArtwork
+                      image={item.product.image}
+                      category={item.product.category}
+                      slug={item.product.slug}
+                      alt={item.product.imageAlt ?? item.product.name}
+                      className="h-full w-full"
+                    />
                   </div>
 
                   <div className="flex-1 min-w-0">

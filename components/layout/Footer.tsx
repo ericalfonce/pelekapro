@@ -48,7 +48,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-[#25D366] hover:text-[#4ade80] transition-colors font-body"
               >
-                <span>💬</span>
+                
                 +255 719 363 738 (WhatsApp)
               </a>
               <a

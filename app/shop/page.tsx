@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, Suspense } from "react";
+import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { SlidersHorizontal, X, Search } from "lucide-react";
 import { ProductCard } from "@/components/ui/ProductCard";
@@ -43,8 +43,14 @@ function ShopPageInner() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(initQuery);
 
-  // Re-sync when URL changes (e.g. navigating from homepage links)
-  useEffect(() => {
+  // Re-sync filters when the URL changes (e.g. navigating from the homepage).
+  // Adjusted during render rather than in an effect so results update in the
+  // same paint instead of flashing stale content for a frame.
+  const [lastParams, setLastParams] = useState(searchParams.toString());
+  const currentParams = searchParams.toString();
+
+  if (currentParams !== lastParams) {
+    setLastParams(currentParams);
     setSelectedCategory(searchParams.get("category") ?? "all");
     setSortBy(
       searchParams.get("sort") === "best-seller"
@@ -52,7 +58,7 @@ function ShopPageInner() {
         : searchParams.get("sort") ?? "featured"
     );
     setSearchQuery(searchParams.get("q") ?? "");
-  }, [searchParams]);
+  }
 
   const filtered = useMemo(() => {
     let list = [...products];
@@ -142,7 +148,7 @@ function ShopPageInner() {
                   : "bg-white text-brand-black border border-black/15 hover:border-brand-orange hover:text-brand-orange"
               )}
             >
-              {cat.icon} {cat.label} ({count})
+              {cat.label} ({count})
             </button>
           );
         })}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChevronRight, Check, Loader2, AlertCircle } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { PriceTag } from "@/components/ui/PriceTag";
+import { ProductArtwork } from "@/components/ui/ProductArtwork";
 import { formatPrice } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
@@ -276,7 +277,13 @@ export default function CheckoutPage() {
               {items.map((item) => (
                 <li key={`${item.product.id}__${item.selectedVariant ?? ""}`} className="flex gap-3">
                   <div className="w-10 h-10 bg-[#F5F5F3] flex-shrink-0 flex items-center justify-center text-lg">
-                    {item.product.image || "📦"}
+                    <ProductArtwork
+                      image={item.product.image}
+                      category={item.product.category}
+                      slug={item.product.slug}
+                      alt={item.product.imageAlt ?? item.product.name}
+                      className="h-full w-full"
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-display font-semibold text-brand-black leading-snug line-clamp-2">{item.product.name}</p>

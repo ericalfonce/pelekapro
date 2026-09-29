@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { CategoryTile } from "@/components/ui/CategoryTile";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PriceTag } from "@/components/ui/PriceTag";
+import { ProductArtwork } from "@/components/ui/ProductArtwork";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { categories } from "@/lib/data/categories";
 import {
@@ -105,8 +106,14 @@ export default function HomePage() {
                     href={`/shop/${product.slug}`}
                     className={`group bg-white/5 border border-white/10 p-5 hover:border-brand-orange/50 transition-colors ${i === 0 ? "col-span-2 sm:col-span-1" : ""}`}
                   >
-                    <div className="aspect-square bg-white/5 flex items-center justify-center text-5xl mb-4">
-                      {getCatEmoji(product.category)}
+                    <div className="aspect-square mb-4 overflow-hidden border border-white/10">
+                      <ProductArtwork
+                        image={product.image}
+                        category={product.category}
+                        slug={product.slug}
+                        alt={product.imageAlt ?? product.name}
+                        className="h-full w-full"
+                      />
                     </div>
                     <p className="text-white/50 text-xs font-body uppercase tracking-wider mb-1">
                       {product.category.replace("-", " ")}
@@ -261,14 +268,6 @@ function TrustItem({ icon, title, body }: { icon: React.ReactNode; title: string
   );
 }
 
-function getCatEmoji(cat: string): string {
-  const m: Record<string, string> = {
-    cases: "📱", chargers: "⚡", "power-banks": "🔋",
-    audio: "🎧", "screen-protectors": "🛡️",
-    smartwatches: "⌚", speakers: "🔊", bundles: "📦",
-  };
-  return m[cat] ?? "📦";
-}
 
 const testimonials = [
   {

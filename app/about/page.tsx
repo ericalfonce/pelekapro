@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle, Check, X } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 
@@ -105,7 +105,7 @@ export default function AboutPage() {
               <ul className="flex flex-col gap-3">
                 {returnReasons.good.map((r) => (
                   <li key={r} className="flex items-start gap-2 text-sm font-body text-brand-black/80">
-                    <span className="text-green-600 font-bold flex-shrink-0 mt-0.5">&#10003;</span>
+                    <Check className="h-4 w-4 shrink-0 mt-0.5 text-green-600" aria-hidden="true" />
                     {r}
                   </li>
                 ))}
@@ -118,7 +118,7 @@ export default function AboutPage() {
               <ul className="flex flex-col gap-3">
                 {returnReasons.bad.map((r) => (
                   <li key={r} className="flex items-start gap-2 text-sm font-body text-brand-black/80">
-                    <span className="text-red-500 font-bold flex-shrink-0 mt-0.5">&#10007;</span>
+                    <X className="h-4 w-4 shrink-0 mt-0.5 text-red-500" aria-hidden="true" />
                     {r}
                   </li>
                 ))}

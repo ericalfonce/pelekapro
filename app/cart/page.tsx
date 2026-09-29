@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Minus, Plus, X, ShoppingBag, ArrowRight } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { PriceTag } from "@/components/ui/PriceTag";
+import { ProductArtwork } from "@/components/ui/ProductArtwork";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { formatPrice } from "@/lib/utils";
 
@@ -58,7 +59,13 @@ export default function CartPage() {
               >
                 <div className="col-span-6 flex items-start gap-4">
                   <div className="w-14 h-14 bg-[#F5F5F3] flex-shrink-0 flex items-center justify-center text-2xl">
-                    {item.product.image || "📦"}
+                    <ProductArtwork
+                      image={item.product.image}
+                      category={item.product.category}
+                      slug={item.product.slug}
+                      alt={item.product.imageAlt ?? item.product.name}
+                      className="h-full w-full"
+                    />
                   </div>
                   <div className="min-w-0">
                     <Link

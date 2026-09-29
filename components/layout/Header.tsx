@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ShoppingCart, Search, Menu, X, MapPin } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, MapPin, MessageCircle } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 import { cn } from "@/lib/utils";
 
@@ -152,7 +152,8 @@ export function Header() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-[#25D366] font-semibold font-display text-sm"
                 >
-                  <span>💬</span> WhatsApp: +255 719 363 738
+                  <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  WhatsApp: +255 719 363 738
                 </a>
               </div>
             </nav>

@@ -3,7 +3,6 @@ export interface CategoryInfo {
   label: string;
   labelSwahili: string;
   description: string;
-  icon: string; // emoji — replace with SVG when design system is ready
   color: string; // subtle bg tint for category tiles
   count?: number;
 }
@@ -14,7 +13,6 @@ export const categories: CategoryInfo[] = [
     label: "Phone Cases",
     labelSwahili: "Vifuniko vya Simu",
     description: "Ulinzi wa kweli bila kuficha uzuri",
-    icon: "📱",
     color: "#F0F0EE",
   },
   {
@@ -22,7 +20,6 @@ export const categories: CategoryInfo[] = [
     label: "Chargers & Cables",
     labelSwahili: "Vichaja na Nyaya",
     description: "GaN, fast charge, MFi certified",
-    icon: "⚡",
     color: "#FFF3E8",
   },
   {
@@ -30,7 +27,6 @@ export const categories: CategoryInfo[] = [
     label: "Power Banks",
     labelSwahili: "Betri za Ziada",
     description: "Usikoseshwe nguvu popote ulipo",
-    icon: "🔋",
     color: "#F0F5EE",
   },
   {
@@ -38,7 +34,6 @@ export const categories: CategoryInfo[] = [
     label: "Earbuds & Headphones",
     labelSwahili: "Masikio na Vipokea Sauti",
     description: "ANC, Hi-Res, wireless freedom",
-    icon: "🎧",
     color: "#EEF0F5",
   },
   {
@@ -46,7 +41,6 @@ export const categories: CategoryInfo[] = [
     label: "Screen Protectors",
     labelSwahili: "Vilinda Skrini",
     description: "9H tempered glass, full-cover",
-    icon: "🛡️",
     color: "#F5EEEE",
   },
   {
@@ -54,7 +48,6 @@ export const categories: CategoryInfo[] = [
     label: "Smartwatches",
     labelSwahili: "Saa za Akili",
     description: "AMOLED, health tracking, week-long battery",
-    icon: "⌚",
     color: "#F0EEF5",
   },
   {
@@ -62,7 +55,6 @@ export const categories: CategoryInfo[] = [
     label: "Bluetooth Speakers",
     labelSwahili: "Vipaza Sauti vya Bluetooth",
     description: "Waterproof, outdoor-ready, powerful",
-    icon: "🔊",
     color: "#EEF5F5",
   },
   {
@@ -70,7 +62,6 @@ export const categories: CategoryInfo[] = [
     label: "Combo Bundles",
     labelSwahili: "Mafurushi ya Combo",
     description: "Vitu vingi kwa bei moja — akiba halisi",
-    icon: "📦",
     color: "#FFF8EE",
   },
 ];

@@ -3,8 +3,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { useState, use } from "react";
-import { Star, ShoppingCart, ChevronRight, Check, Package, Truck, RotateCcw } from "lucide-react";
+import { Star, ShoppingCart, ChevronRight, Check, Package, Truck, RotateCcw, ShieldCheck } from "lucide-react";
 import { getProductBySlug, products } from "@/lib/data/products";
+import { ProductArtwork } from "@/components/ui/ProductArtwork";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -12,11 +13,13 @@ import { useCartStore } from "@/lib/store/cart";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  params: { slug: string };
+  // In the App Router, `params` is a Promise and must be unwrapped.
+  params: Promise<{ slug: string }>;
 }
 
 export default function ProductPage({ params }: Props) {
-  const maybeProduct = getProductBySlug(params.slug);
+  const { slug } = use(params);
+  const maybeProduct = getProductBySlug(slug);
   if (!maybeProduct) notFound();
   const product = maybeProduct!;
 
@@ -39,15 +42,6 @@ export default function ProductPage({ params }: Props) {
   const related = products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
-
-  const getCatEmoji = (cat: string) => {
-    const m: Record<string, string> = {
-      cases: "📱", chargers: "⚡", "power-banks": "🔋",
-      audio: "🎧", "screen-protectors": "🛡️",
-      smartwatches: "⌚", speakers: "🔊", bundles: "📦",
-    };
-    return m[cat] ?? "📦";
-  };
 
   const badgeLabel = product.badge === "bestseller"
     ? "Best Seller"
@@ -77,23 +71,49 @@ export default function ProductPage({ params }: Props) {
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 mb-20">
         {/* Gallery */}
         <div>
-          <div className="aspect-square bg-white flex items-center justify-center text-9xl mb-3 border border-black/8">
-            {getCatEmoji(product.category)}
+          <div className="mb-3 aspect-square overflow-hidden border border-black/8">
+            <ProductArtwork
+              image={product.image}
+              category={product.category}
+              slug={product.slug}
+              alt={product.imageAlt ?? product.name}
+              variant="stage"
+              priority
+              className="h-full w-full"
+            />
           </div>
+
+          {/* Thumbnails — the first reflects the real photo, the rest use the
+              vector stand-in until additional angles are supplied. */}
           <div className="flex gap-2">
             {[0, 1, 2].map((i) => (
-              <button
+              <div
                 key={i}
+                aria-hidden="true"
                 className={cn(
-                  "w-16 h-16 bg-white border flex items-center justify-center text-2xl transition-colors",
-                  i === 0 ? "border-brand-orange" : "border-black/8 hover:border-brand-orange/50"
+                  "h-16 w-16 overflow-hidden border transition-colors",
+                  i === 0
+                    ? "border-brand-orange"
+                    : "border-black/8 opacity-70 hover:border-brand-orange/50 hover:opacity-100"
                 )}
-                aria-label={`Image ${i + 1}`}
               >
-                {getCatEmoji(product.category)}
-              </button>
+                <ProductArtwork
+                  image={i === 0 ? product.image : undefined}
+                  category={product.category}
+                  slug={product.slug}
+                  alt=""
+                  className="h-full w-full"
+                />
+              </div>
             ))}
           </div>
+
+          {product.warranty && (
+            <p className="mt-4 inline-flex items-center gap-2 bg-brand-warm px-3 py-2 text-xs font-medium text-brand-black">
+              <ShieldCheck className="h-4 w-4 text-brand-orange" aria-hidden="true" />
+              {product.warranty}
+            </p>
+          )}
         </div>
 
         {/* Info */}

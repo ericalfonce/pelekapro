@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { CategoryInfo } from "@/lib/data/categories";
+import { getCategoryVisual } from "@/components/ui/ProductArtwork";
 import { cn } from "@/lib/utils";
 
 interface CategoryTileProps {
@@ -8,6 +9,8 @@ interface CategoryTileProps {
 }
 
 export function CategoryTile({ category, className }: CategoryTileProps) {
+  const Icon = getCategoryVisual(category.id).icon;
+
   return (
     <Link
       href={`/shop?category=${category.id}`}
@@ -18,9 +21,12 @@ export function CategoryTile({ category, className }: CategoryTileProps) {
       style={{ backgroundColor: category.color }}
     >
       <div className="flex flex-col gap-3">
-        <span className="text-3xl" role="img" aria-label={category.label}>
-          {category.icon}
-        </span>
+        <Icon
+          className="h-8 w-8 text-brand-orange"
+          strokeWidth={1.5}
+          role="img"
+          aria-label={category.label}
+        />
         <div>
           <p className="font-display font-semibold text-brand-black text-sm leading-tight group-hover:text-brand-orange transition-colors">
             {category.label}

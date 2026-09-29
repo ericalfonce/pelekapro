@@ -8,7 +8,24 @@ export interface Product {
   description: string;
   features: string[];
   variants?: string[];
-  image: string;
+  /**
+   * Photo path, e.g. "/products/gan-65w.png".
+   *
+   * Optional. While undefined, `ProductArtwork` renders a vector product
+   * render instead — so the layout is always complete. To add real photos
+   * later, drop the files in `public/products/` and set this field.
+   */
+  image?: string;
+  /** Alt text. Falls back to the product name. */
+  imageAlt?: string;
+  /**
+   * Brand name for genuine branded stock, e.g. "Anker".
+   * Leave undefined for generic white-label units — the UI then sells on
+   * specs and warranty rather than brand recognition.
+   */
+  brand?: string;
+  /** Warranty proof point, e.g. "1-year official warranty". */
+  warranty?: string;
   badge?: "flash" | "new" | "bestseller" | "bundle";
   inStock: boolean;
   rating: number;
@@ -32,7 +49,6 @@ export const products: Product[] = [
       "Raised edges protect screen and camera",
     ],
     variants: ["iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", "iPhone 15 Pro Max"],
-    image: "🧳",
     badge: "flash",
     inStock: true,
     rating: 4.8,
@@ -53,7 +69,6 @@ export const products: Product[] = [
       "60% smaller than standard laptop chargers",
       "Built-in protection: over-voltage, over-current, temperature",
     ],
-    image: "⚡",
     badge: "bestseller",
     inStock: true,
     rating: 4.9,
@@ -74,7 +89,6 @@ export const products: Product[] = [
       "LED charge indicator",
       "Slim design: fits in jacket or trouser pocket",
     ],
-    image: "🔋",
     badge: "flash",
     inStock: true,
     rating: 4.7,
@@ -95,7 +109,6 @@ export const products: Product[] = [
       "Bluetooth 5.3 — stable connection up to 10m",
       "USB-C fast charge: 10 min = 1 hour playback",
     ],
-    image: "🎧",
     badge: "new",
     inStock: true,
     rating: 4.6,
@@ -116,7 +129,6 @@ export const products: Product[] = [
       "Includes alignment tool for bubble-free install",
     ],
     variants: ["Galaxy S24", "Galaxy S24+", "Galaxy S24 Ultra"],
-    image: "🛡️",
     inStock: true,
     rating: 4.5,
     reviews: 156,
@@ -137,7 +149,6 @@ export const products: Product[] = [
       "IP68 waterproof — swim-safe",
       "Compatible with Android 6.0+ and iOS 12+",
     ],
-    image: "⌚",
     badge: "bestseller",
     inStock: true,
     rating: 4.4,
@@ -158,7 +169,6 @@ export const products: Product[] = [
       "Universal fit — iPhone 12+ MagSafe and all phones",
       "One-hand release mechanism",
     ],
-    image: "🚗",
     badge: "flash",
     inStock: true,
     rating: 4.7,
@@ -178,7 +188,6 @@ export const products: Product[] = [
       "2-metre length",
       "Universal USB-C to USB-C",
     ],
-    image: "🔌",
     inStock: true,
     rating: 4.6,
     reviews: 211,
@@ -199,7 +208,6 @@ export const products: Product[] = [
       "Built-in mic for speakerphone calls",
       "USB-C charging",
     ],
-    image: "🔊",
     badge: "new",
     inStock: true,
     rating: 4.8,
@@ -219,7 +227,6 @@ export const products: Product[] = [
       "Folds flat for travel",
       "Compatible with phones, tablets, and small laptops",
     ],
-    image: "📱",
     inStock: true,
     rating: 4.5,
     reviews: 72,
@@ -240,7 +247,6 @@ export const products: Product[] = [
       "Available for popular Samsung and iPhone models",
     ],
     variants: ["iPhone 14", "iPhone 15", "Samsung S23", "Samsung S24", "Tecno Camon 20"],
-    image: "🔒",
     badge: "bestseller",
     inStock: true,
     rating: 4.3,
@@ -262,7 +268,6 @@ export const products: Product[] = [
       "Available for most popular phone models",
     ],
     variants: ["iPhone 15", "Samsung Galaxy S24", "Tecno Camon 20"],
-    image: "📦",
     badge: "bundle",
     inStock: true,
     rating: 4.9,
@@ -283,7 +288,6 @@ export const products: Product[] = [
       "Save TSh 45,000 vs. individual prices",
       "Gift box packaging included",
     ],
-    image: "✈️",
     badge: "bundle",
     inStock: true,
     rating: 4.9,
@@ -304,7 +308,6 @@ export const products: Product[] = [
       "Both come in original packaging",
       "1-month warranty on both items",
     ],
-    image: "🎵",
     badge: "bundle",
     inStock: true,
     rating: 4.8,
@@ -340,4 +343,17 @@ export function searchProducts(query: string): Product[] {
       p.description.toLowerCase().includes(q) ||
       p.category.toLowerCase().includes(q)
   );
+}
+
+/** Percentage saved versus `originalPrice`, or null when not discounted. */
+export function getDiscountPercent(product: Product): number | null {
+  if (!product.originalPrice || product.originalPrice <= product.price) return null;
+  return Math.round(
+    ((product.originalPrice - product.price) / product.originalPrice) * 100
+  );
+}
+
+/** True when the product has a real photo rather than using the vector fallback. */
+export function hasPhoto(product: Product): boolean {
+  return Boolean(product.image);
 }
